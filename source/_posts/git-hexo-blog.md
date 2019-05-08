@@ -2,6 +2,7 @@
 title: 使用Hexo搭建Github博客
 date: 2019-01-20 09:41:35
 tags:
+ - Blog
 ---
 
 # 前言
@@ -40,13 +41,14 @@ $ npm install
 * source: 博客文档资源，例如用户编写的Markdown文档
 * themes: 用户主题，可以从网上下载不同的主题放进去
 
-# 生成
+# 编辑
 *Tips:以下指令参数可以用首字母代替*
 
 新建一篇文章
 ``` bash
 $ hexo new <title>
 ```
+在source/_posts/目录下生成文章，即可编辑
 
 生成
 ``` bash
@@ -103,3 +105,4 @@ Done!
 
 # 参考
 [Hexo官方文档](https://hexo.io/zh-cn/docs/)
+[NexT使用文档](http://theme-next.iissnan.com)
