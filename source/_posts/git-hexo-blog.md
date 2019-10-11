@@ -103,6 +103,12 @@ $ hexo deploy
 Done!
 通过xxx(Github用户名).github.io即可访问博客
 
+# 小技巧
+* 文章超链接
+```
+{% post_link 文章文件名（去除后缀） 显示文字 %}
+```
+
 # 参考
 [Hexo官方文档](https://hexo.io/zh-cn/docs/)
 [NexT使用文档](http://theme-next.iissnan.com)
