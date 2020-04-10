@@ -1,10 +1,12 @@
 ---
-title: callback_n_listener
+title: 理解回调和监听
 date: 2019-08-09 11:57:31
 tags:
  - C++
 ---
 
-Callback: 事件发生时，需要回掉执行某些操作，或者处理回调函数提供的数据，重点在于事件发生时的操作。
+Callback: 一般用于异步操作，调用（Call）某个接口，处理完成后，进行回调（CallBack）
 
 Listener：更像是要监听某个事件的发生，执行的操作会比较简单，重点在于关注事件的发生。例如OnSuccess,OnFailure
+
+Handler：事件发生时，需要执行某些操作进行处理，或者处理回调函数提供的数据，重点在于事件发生时的操作。
