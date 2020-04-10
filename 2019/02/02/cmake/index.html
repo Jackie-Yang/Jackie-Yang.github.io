@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="概述 CMake允许开发者编写一种平台无关的 CMakeList.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”  配置CMakeLists.txt常用指令设定变量1set(&amp;l">
+  <meta name="description" content="概述 CMake允许开发者编写一种平台无关的配置文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”">
 <meta name="keywords" content="CMake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMake使用入门">
 <meta property="og:url" content="http://yoursite.com/2019/02/02/cmake/index.html">
 <meta property="og:site_name" content="点点滴滴">
-<meta property="og:description" content="概述 CMake允许开发者编写一种平台无关的 CMakeList.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”  配置CMakeLists.txt常用指令设定变量1set(&amp;l">
+<meta property="og:description" content="概述 CMake允许开发者编写一种平台无关的配置文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-15T08:23:48.225Z">
+<meta property="og:updated_time" content="2019-03-28T02:59:22.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CMake使用入门">
-<meta name="twitter:description" content="概述 CMake允许开发者编写一种平台无关的 CMakeList.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”  配置CMakeLists.txt常用指令设定变量1set(&amp;l">
+<meta name="twitter:description" content="概述 CMake允许开发者编写一种平台无关的配置文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”">
 
 
 
@@ -390,8 +390,9 @@
 
       
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
-<p>CMake允许开发者编写一种平台无关的 CMakeList.txt 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”</p>
+<p>CMake允许开发者编写一种平台无关的配置文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 Makefile 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程，从而实现“Write once, run everywhere”</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="配置CMakeLists-txt"><a href="#配置CMakeLists-txt" class="headerlink" title="配置CMakeLists.txt"></a>配置CMakeLists.txt</h1><h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><p>设定变量<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(&lt;var&gt; &lt;value&gt;)</span><br></pre></td></tr></table></figure></p>
 <p>将源文件文件夹添加到变量<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">aux_source_directory</span>(&lt;dir&gt; SRC)</span><br></pre></td></tr></table></figure></p>
 <p>将所选源文件编译成库(默认静态库)<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; [STATIC | SHARED | MODULE]</span><br><span class="line">            [EXCLUDE_FROM_ALL]</span><br><span class="line">            [source1] [source2 ...])</span><br><span class="line"><span class="comment">#eg:</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;base_lib_name&#125;</span> STATIC <span class="variable">$&#123;SRC&#125;</span>)</span><br></pre></td></tr></table></figure></p>
@@ -399,14 +400,19 @@
 <p>添加头文件包含路径<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(&lt;dir&gt;)</span><br></pre></td></tr></table></figure></p>
 <p>链接库<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#target 可以是被add_library或者add_executable的目标</span></span><br><span class="line"><span class="comment">#item 链接的库可以直接使用工程中target生成的库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(&lt;<span class="keyword">target</span>&gt; ... &lt;item&gt;... ...)</span><br></pre></td></tr></table></figure></p>
 <p>链接库路径<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">link_directories</span>(&lt;dir&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>添加目标依赖，确保在生成目标时依赖已经构建<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_dependencies</span>(<span class="keyword">target</span> depend-<span class="keyword">target</span>...)</span><br></pre></td></tr></table></figure></p>
 <p>添加定义<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_definitions</span>(-Dxxxx);</span><br></pre></td></tr></table></figure></p>
 <p>打印信息<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#错误信息</span></span><br><span class="line"><span class="keyword">message</span>(FATAL_ERROR <span class="string">"FATAL:xxxxx"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#警告信息</span></span><br><span class="line"><span class="keyword">message</span>(WARNING <span class="string">"Warning:xxxxx"</span>)</span><br><span class="line">　　</span><br><span class="line"><span class="comment">#正常信息</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">"xxxx"</span>)</span><br></pre></td></tr></table></figure></p>
 <p>添加子文件夹，CMake会执行其中的CMakeLists.txt<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_subdirectory</span>(src)</span><br></pre></td></tr></table></figure></p>
 <h2 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h2><ul>
 <li>CMAKE_SOURCE_DIR：顶层CMakeLists.txt的目录</li>
 <li>PROJECT_SOURCE_DIR：CMakeLists.txt定义了project信息的目录</li>
+<li>CMAKE_BINARY_DIR：CMake编译的目录，一般是build</li>
+<li>PROJECT_BINARY_DIR：项目编译目录，一般同上</li>
+<li>$ENV{NAME}：查看系统环境变量</li>
 </ul>
 <h1 id="基本编译方法"><a href="#基本编译方法" class="headerlink" title="基本编译方法"></a>基本编译方法</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://www.hahack.com/codes/cmake/" target="_blank" rel="noopener">CMake 入门实战</a><br><a href="https://cmake.org/cmake/help/latest/" target="_blank" rel="noopener">CMake官方文档</a></p>
 
       
     </div>
@@ -443,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/30/template/" rel="next" title="c++模版入门">
-                <i class="fa fa-chevron-left"></i> c++模版入门
+              <a href="/2019/01/20/git-hexo-blog/" rel="next" title="使用Hexo搭建Github博客">
+                <i class="fa fa-chevron-left"></i> 使用Hexo搭建Github博客
               </a>
             
           </div>
@@ -452,6 +458,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/05/condition-variable/" rel="prev" title="条件变量">
+                条件变量 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -548,7 +558,31 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -584,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置CMakeLists-txt"><span class="nav-number">2.</span> <span class="nav-text">配置CMakeLists.txt</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令"><span class="nav-number">2.1.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用变量"><span class="nav-number">2.2.</span> <span class="nav-text">常用变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本编译方法"><span class="nav-number">3.</span> <span class="nav-text">基本编译方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置CMakeLists-txt"><span class="nav-number">2.</span> <span class="nav-text">配置CMakeLists.txt</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令"><span class="nav-number">2.1.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用变量"><span class="nav-number">2.2.</span> <span class="nav-text">常用变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本编译方法"><span class="nav-number">3.</span> <span class="nav-text">基本编译方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
             
 
           </div>
@@ -604,7 +638,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

@@ -94,25 +94,25 @@
 
 
 
-  <meta name="description" content="指针及数组是初学C语言时比较令人头疼的知识点，但是理解了之后用起来十分灵活 下标使用的理解初学数组的时候，老师总是说使用指针的方式访问数组要比下标访问更快更好，但是个人认为并不全对，这个问题要根据不同情况进行分析  对数组或内存进行直接访问 123int Data[10];Data[0] = 0;*(Data + 0) = 0;  首先要了解的是，编译器对下标的处理其实是跟指针一致的,因此以上写法">
-<meta name="keywords" content="C">
+  <meta name="description" content="使用场景在多线程编程中，经常会出现多个消费者同时等待、竞争资源的场景。利用条件变量以及互斥锁的机制，能优雅地解决这个问题。">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言数组和指针小结">
-<meta property="og:url" content="http://yoursite.com/2016/07/19/c_pointer_array/index.html">
+<meta property="og:title" content="条件变量">
+<meta property="og:url" content="http://yoursite.com/2019/03/05/condition-variable/index.html">
 <meta property="og:site_name" content="点点滴滴">
-<meta property="og:description" content="指针及数组是初学C语言时比较令人头疼的知识点，但是理解了之后用起来十分灵活 下标使用的理解初学数组的时候，老师总是说使用指针的方式访问数组要比下标访问更快更好，但是个人认为并不全对，这个问题要根据不同情况进行分析  对数组或内存进行直接访问 123int Data[10];Data[0] = 0;*(Data + 0) = 0;  首先要了解的是，编译器对下标的处理其实是跟指针一致的,因此以上写法">
+<meta property="og:description" content="使用场景在多线程编程中，经常会出现多个消费者同时等待、竞争资源的场景。利用条件变量以及互斥锁的机制，能优雅地解决这个问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-08T06:29:27.584Z">
+<meta property="og:updated_time" content="2019-05-10T05:34:02.102Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C语言数组和指针小结">
-<meta name="twitter:description" content="指针及数组是初学C语言时比较令人头疼的知识点，但是理解了之后用起来十分灵活 下标使用的理解初学数组的时候，老师总是说使用指针的方式访问数组要比下标访问更快更好，但是个人认为并不全对，这个问题要根据不同情况进行分析  对数组或内存进行直接访问 123int Data[10];Data[0] = 0;*(Data + 0) = 0;  首先要了解的是，编译器对下标的处理其实是跟指针一致的,因此以上写法">
+<meta name="twitter:title" content="条件变量">
+<meta name="twitter:description" content="使用场景在多线程编程中，经常会出现多个消费者同时等待、竞争资源的场景。利用条件变量以及互斥锁的机制，能优雅地解决这个问题。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/19/c_pointer_array/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/05/condition-variable/">
 
 
 
@@ -122,7 +122,7 @@
   };
 </script>
 
-  <title>C语言数组和指针小结 | 点点滴滴</title>
+  <title>条件变量 | 点点滴滴</title>
   
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/19/c_pointer_array/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/05/condition-variable/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="家烨">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C语言数组和指针小结
+          <h1 class="post-title" itemprop="name headline">条件变量
 
               
             
@@ -347,7 +347,7 @@
                 
               
 
-              <time title="创建时间：2016-07-19 10:04:57" itemprop="dateCreated datePublished" datetime="2016-07-19T10:04:57+08:00">2016-07-19</time>
+              <time title="创建时间：2019-03-05 17:52:09" itemprop="dateCreated datePublished" datetime="2019-03-05T17:52:09+08:00">2019-03-05</time>
             
 
             
@@ -389,23 +389,15 @@
       
 
       
-        <p>指针及数组是初学C语言时比较令人头疼的知识点，但是理解了之后用起来十分灵活</p>
-<h1 id="下标使用的理解"><a href="#下标使用的理解" class="headerlink" title="下标使用的理解"></a>下标使用的理解</h1><p>初学数组的时候，老师总是说使用指针的方式访问数组要比下标访问更快更好，但是个人认为并不全对，这个问题要根据不同情况进行分析</p>
-<ol>
-<li><p>对数组或内存进行直接访问</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Data[<span class="number">10</span>];</span><br><span class="line">Data[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">*(Data + <span class="number">0</span>) = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p> 首先要了解的是，编译器对下标的处理其实是跟指针一致的,因此以上写法其实是等价的<br> 可以通过下面这个有趣的写法去验证，你会发现结果是和上面一样</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>[Data]    <span class="comment">//编译器会把它看成 *(0 + Data)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对数组或内存进行遍历<br>第一种方法，在访问Data的每一个元素的时候，计算机都要去计算访问的地址，这个过程大概可以理解为：基地址 + 偏移量 * sizeof(int)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Data[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i= <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++)</span><br><span class="line">&#123;</span><br><span class="line">    Data[i] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 第二种方法，每次加上偏移地址，更加灵活且有效率</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Data[<span class="number">10</span>], *pData;</span><br><span class="line"><span class="keyword">for</span> (pData= Data; pData &lt; Data + <span class="number">10</span>; pData++)</span><br><span class="line">&#123;</span><br><span class="line">    *pData = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>因此，一般情况下对于数据的访问，建议使用下标法，这样在一定程度上也能提升代码的可读性<br><a id="more"></a></p>
-<h1 id="指针的定义"><a href="#指针的定义" class="headerlink" title="指针的定义"></a>指针的定义</h1><p>在定义指针的时候*的作用是声明指针，定义时注意应和变量结合而不是类型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *pA, B;                            <span class="comment">//B不是指针</span></span><br><span class="line"><span class="keyword">int</span> *pA, pB;                           <span class="comment">//pB是指针</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> DATA_TYPE,*P_DATA;         <span class="comment">//P_DATA是指针</span></span><br><span class="line"><span class="keyword">int</span> A,B[<span class="number">10</span>];                           <span class="comment">//和数组类似</span></span><br></pre></td></tr></table></figure></p>
-<p>但是为了避免歧义，应该尽量不要把多个变量在一行定义:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *pA;</span><br><span class="line"><span class="keyword">int</span> B;</span><br></pre></td></tr></table></figure></p>
+        <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>在多线程编程中，经常会出现多个消费者同时等待、竞争资源的场景。利用条件变量以及互斥锁的机制，能优雅地解决这个问题。</p>
+<a id="more"></a>
+<h2 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::condition_variable cv;</span><br><span class="line"><span class="built_in">std</span>::mutex mux;</span><br><span class="line"><span class="keyword">int</span> resource = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者竞争资源</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">consumer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::unique_lock&lt;<span class="built_in">std</span>::mutex&gt; lk(mux);  <span class="comment">//上锁</span></span><br><span class="line">    <span class="keyword">while</span>(resource == <span class="number">0</span>)    </span><br><span class="line">        <span class="comment">// 3.抢到锁的消费者，到4获取资源</span></span><br><span class="line">        <span class="comment">// 6.没有抢到锁的消费者在锁被释放后唤醒，判断资源已经没有了，回到1继续等待（见下方一节虚假唤醒）</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 1.解锁，等待资源</span></span><br><span class="line">        cv.wait(lk);   </span><br><span class="line">        <span class="comment">// 2.唤醒后，重新竞争互斥锁</span></span><br><span class="line">    &#125; </span><br><span class="line">        <span class="comment">// 4.抢到互斥锁的消费者，获取资源</span></span><br><span class="line">    --resource;</span><br><span class="line">&#125;       <span class="comment">//5.局部变量释放，解锁</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生产者生产资源</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">producer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::unique_lock&lt;<span class="built_in">std</span>::mutex&gt; lk(mux);  <span class="comment">//上锁</span></span><br><span class="line">    ++resource;         <span class="comment">//产生资源</span></span><br><span class="line">    cv.notify_all();    <span class="comment">//唤醒消费者</span></span><br><span class="line">&#125;   <span class="comment">//解锁</span></span><br></pre></td></tr></table></figure>
+<h2 id="虚假唤醒"><a href="#虚假唤醒" class="headerlink" title="虚假唤醒"></a>虚假唤醒</h2><p>在消费者的操作中，使用while循环判断资源是为了防止虚假唤醒，在多个消费者的场景下，如果执行notify_all，抢到互斥锁的消费者会率先被唤醒，此时其他消费者仍在等待状态，当取走资源后，互斥锁被释放（unique_lock析构时自动释放），此时其他消费者被唤醒，因此要再次判断资源是否可用，否则为虚假唤醒，重新进入等待的状态。</p>
+<p>使用wait_for/wait_until也能很解决虚假唤醒的问题，他能指定一个判断条件，当条件为真时，才会被真正唤醒，同时还能设置超时时间，防止无限期等待。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//消费者竞争资源</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">consumer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::unique_lock&lt;<span class="built_in">std</span>::mutex&gt; lk(mux);  <span class="comment">//上锁</span></span><br><span class="line">    <span class="keyword">if</span>(cv.wait_for(lk, </span><br><span class="line">                <span class="built_in">std</span>::chrono::milliseconds&#123;<span class="number">1000</span>&#125;,</span><br><span class="line">                []&#123;<span class="keyword">return</span> i == <span class="number">1</span>&#125;))</span><br><span class="line">    &#123;</span><br><span class="line">        --resource;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">std</span>::out &lt;&lt; <span class="string">" timed out"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="comment">//解锁</span></span><br></pre></td></tr></table></figure>
+<p>通过在判断函数里面加打印可以发现，实际上在notify_all的时候，每个消费者都会调用一次比较函数，查看资源是否可用（这里面也隐含了一次解锁和上锁的操作），如果资源不可用，则继续等待，效果与前面轮询的效果一致。</p>
+<p><em>对锁的操作规律：在开始等待的时候，锁被释放，收到通知时，重新竞争锁</em></p>
 
       
     </div>
@@ -429,7 +421,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag"># C</a>
+            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -442,14 +434,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/02/02/cmake/" rel="next" title="CMake使用入门">
+                <i class="fa fa-chevron-left"></i> CMake使用入门
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/15/markdown-md/" rel="prev" title="Markdown基本使用">
-                Markdown基本使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/23/effective-copy/" rel="prev" title="Effective C++笔记：赋值及拷贝">
+                Effective C++笔记：赋值及拷贝 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -607,7 +603,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下标使用的理解"><span class="nav-number">1.</span> <span class="nav-text">下标使用的理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指针的定义"><span class="nav-number">2.</span> <span class="nav-text">指针的定义</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实例"><span class="nav-number">2.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚假唤醒"><span class="nav-number">3.</span> <span class="nav-text">虚假唤醒</span></a></li></ol></div>
             
 
           </div>
